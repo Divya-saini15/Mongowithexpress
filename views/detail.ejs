@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Details | Chat App</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+        .chat-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h2 {
+            color: #1877f2;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+        .chat-details {
+            background-color: #f0f2f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .chat-from, .chat-to {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .chat-message {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+        .chat-timestamp {
+            font-size: 14px;
+            color: #666;
+            text-align: right;
+        }
+        .back-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+        .back-button:hover {
+            background-color: #1358af;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h2>Chat Details</h2>
+        <div class="chat-details">
+            <div class="chat-header">
+                <span class="chat-from">From: <%= chatData.from %></span>
+                <span class="chat-to">To: <%= chatData.to %></span>
+            </div>
+            <div class="chat-message">
+                <%= chatData.msg %>
+            </div>
+            <div class="chat-timestamp">
+                <%= chatData.created_at.toString().split(" ")[4] %> on
+                <%= chatData.created_at.toString().split(" ").slice(0, 4).join(" ") %>
+            </div>
+        </div>
+        <a href="/chats" class="back-button">Back to All Chats</a>
+    </div>
+</body>
+</html>

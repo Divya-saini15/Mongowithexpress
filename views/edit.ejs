@@ -65,18 +65,13 @@
 </head>
 <body>
     <div class="chat-form">
-        <h2>New Chat</h2>
-        <form method="POST">
+        <h2>Edit Chat of id <span style="color: black; font-size: 15px;"><i><%= chatData.id %></i></span></h2>
+        <h2>This chat is send from <%= chatData.from %> to <%= chatData.to %></h2>
+        <form method="POST" action="/editone/<%=chatData._id%>?_method=PUT">
             <div class="form-group">
-                <input type="text" placeholder="Your name" name="from" required>
+                <textarea name="msg" id="msg" placeholder="<%= chatData.msg %>" ></textarea>
             </div>
-            <div class="form-group">
-                <textarea name="msg" id="msg" placeholder="Write your message here..." required></textarea>
-            </div>
-            <div class="form-group">
-                <input type="text" placeholder="Receiver's name" name="to" required>
-            </div>
-            <button type="submit">Send Message</button>
+            <button type="submit">Edit</button>
         </form>
     </div>
 </body>
