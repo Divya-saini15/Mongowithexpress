@@ -29,13 +29,15 @@ app.get("/favicon.ico", (req, res) => {
 //List record
 app.get("/chats", async (req, res) => {
   const chats = await Chat.find();
+  const chatsCount = await Chat.find().count();
+  console.log("Total records are ==> ", chatsCount);
   const q = req.params.q;
-  console.log(q);
+  // console.log(q);
   if (q) {
     const chats = await Chat.find({ $text: { $search: q } });
-    res.render("index.ejs", { chats });
+    res.render("index.ejs", { chats, chatsCount });
   } else {
-    res.render("index.ejs", { chats });
+    res.render("index.ejs", { chats ,chatsCount });
   }
 });
 
