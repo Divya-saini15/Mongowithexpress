@@ -29,8 +29,14 @@ app.get("/favicon.ico", (req, res) => {
 //List record
 app.get("/chats", async (req, res) => {
   const chats = await Chat.find();
-  console.log(chats);
-  res.render("index.ejs", { chats });
+  const q = req.params.q;
+  console.log(q);
+  if (q) {
+    const chats = await Chat.find({ $text: { $search: q } });
+    res.render("index.ejs", { chats });
+  } else {
+    res.render("index.ejs", { chats });
+  }
 });
 
 //New Route
@@ -78,6 +84,7 @@ app.get("/detail/:id", async (req, res) => {
     if (!chatData) {
       return res.status(404).send("Chat not found");
     }
+
     console.log(chatData);
     res.render("detail.ejs", { chatData: chatData });
   } catch (error) {
@@ -118,6 +125,17 @@ app.put("/editone/:id", async (req, res) => {
   );
   console.log(updatedChat);
   res.redirect("/chats");
+});
+//Delete routes
+app.delete("/delete/:id", async (req, res) => {
+  let { id } = req.params;
+  try {
+    const deletedChat = await Chat.findByIdAndDelete(id);
+    console.log(deletedChat);
+    res.redirect("/chats");
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 app.get("/", (req, res) => {

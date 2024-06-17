@@ -1,106 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chat App</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-        }
-        .create-chat {
-            display: block;
-            width: 200px;
-            margin: 0 auto 30px;
-            padding: 15px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .create-chat:hover {
-            background-color: #45a049;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-            color: #333;
-            font-weight: bold;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .message {
-            max-width: 400px;
-            word-wrap: break-word;
-        }
-        .timestamp {
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+      }
+      .create-chat {
+        display: block;
+        width: 200px;
+        margin: 0 auto 30px;
+        padding: 15px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .create-chat:hover {
+        background-color: #45a049;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #f2f2f2;
+        color: #333;
+        font-weight: bold;
+      }
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+      .message {
+        max-width: 400px;
+        word-wrap: break-word;
+      }
+      .timestamp {
+        font-size: 14px;
+        color: #666;
+      }
+      .go {
+        background-color: rgba(0, 0, 255, 0.582);
+        color: white;
+        /* border-radius: 50%; */
+        font-style: bold;
+      }
+      .search-input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
             font-size: 14px;
-            color: #666;
+            outline: none;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            margin-bottom: 50px;
+
         }
-        .go {
-            background-color: rgba(0, 0, 255, 0.582);
-            color: white;
-            /* border-radius: 50%; */
-            font-style: bold;
+
+        .search-input:focus {
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            transform: scale(1.05);
+        }
+
+        .search-input::-webkit-input-placeholder {
+            font-style: italic;
+        }
+        #del{
+            background-color: rgba(238, 94, 94, 0.959)
         }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>All Chats</h1>
-    
-    <form action="http://localhost:8080/chats/new">
-        <button class="create-chat">Create Chat</button>
-    </form>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>From</th>
-                <th>Message</th>
-                <th>To</th>
-                <th>Timestamp</th>
-                <th>Id</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% for(let chat of chats){ %>
-                <tr>
-                    <td><%= chat.from %></td>
-                    <td class="message"><%= chat.msg %></td>
-                    <td><%= chat.to %></td>
-                    <td class="timestamp">
-                        <%= chat.created_at.toString().split(" ")[4] %><br>
-                        <%= chat.created_at.toString().split(" ").slice(0,4).join(" ") %>
-                    </td>
-                    <td><%= chat.id %></td>
-                    <td><form action="http://localhost:8080/edit/<%=chat.id%>"><button class="go">Edit</button></form></td>
-                    <td><form action="http://localhost:8080/detail/<%=chat.id%>"><button class="go">Go</button></form></td>
 
-                </tr>
-            <% } %>
-        </tbody>
+    <form action="http://localhost:8080/chats/new">
+      <button class="create-chat">Create Chat</button>
+    </form>
+
+    <form action="http://localhost:8080/chats" class="search-container">
+        <input type="text" class="search-input" placeholder="Search..." id="searchInput" name="q" >
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>From</th>
+          <th>Message</th>
+          <th>To</th>
+          <th>Timestamp</th>
+          <th>Id</th>
+          <th></th>
+          <th></th>
+          <th></th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let chat of chats){ %>
+        <tr>
+          <td><%= chat.from %></td>
+          <td class="message"><%= chat.msg %></td>
+          <td><%= chat.to %></td>
+          <td class="timestamp">
+            <%= chat.created_at.toString().split(" ")[4] %><br />
+            <%= chat.created_at.toString().split(" ").slice(0,4).join(" ") %>
+          </td>
+          <td><%= chat.id %></td>
+          <td>
+            <form action="http://localhost:8080/edit/<%=chat.id%>">
+              <button class="go">Edit</button>
+            </form>
+          </td>
+          <td>
+            <form action="http://localhost:8080/detail/<%=chat.id%>">
+              <button class="go">Go</button>
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="http://localhost:8080/delete/<%=chat.id%>?_method=DELETE">
+              <button class="go" id="del">Delete</button>
+            </form>
+          </td>
+        </tr>
+        <% } %>
+      </tbody>
     </table>
-</body>
+  </body>
 </html>
